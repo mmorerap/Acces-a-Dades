@@ -7,8 +7,8 @@ namespace dbdemo.Repository;
 class ProductADO
 {
     public Guid Id { get; set; }
-    public string Code { get; set; } = ;
-    public string Name { get; set; } = ;
+    public string Code { get; set; } = "";
+    public string Name { get; set; } = "";
     public decimal Price { get; set; }
 
     public void Insert(DatabaseConnection dbConn)
@@ -16,26 +16,26 @@ class ProductADO
 
         dbConn.Open();
 
-        string sql = @INSERT INTO Products (Id, Code, Name, Price)
-                        VALUES (@Id, @Code, @Name, @Price);
+        string sql = @"INSERT INTO Products (Id, Code, Name, Price)
+                        VALUES (@Id, @Code, @Name, @Price)";
 
         using SqlCommand cmd = new SqlCommand(sql, dbConn.sqlConnection);
-        cmd.Parameters.AddWithValue(@Id, Id);
-        cmd.Parameters.AddWithValue(@Code, Code);
-        cmd.Parameters.AddWithValue(@Name, Name);
-        cmd.Parameters.AddWithValue(@Price, Price);
+        cmd.Parameters.AddWithValue("@Id", Id);
+        cmd.Parameters.AddWithValue("@Code", Code);
+        cmd.Parameters.AddWithValue("@Name", Name);
+        cmd.Parameters.AddWithValue("@Price", Price);
 
         int rows = cmd.ExecuteNonQuery();
-        Console.WriteLine(${rows} fila inserida.);
+        Console.WriteLine($"{rows} fila inserida.");
         dbConn.Close();
     }
 
-    public static ListProductADO GetAll(DatabaseConnection dbConn)
+    public static List<ProductADO> GetAll(DatabaseConnection dbConn)
     {
-        ListProductADO products = new();
+        List<ProductADO> products = new();
 
         dbConn.Open();
-        string sql = SELECT Id, Code, Name, Price FROM Products;
+        string sql = "SELECT Id, Code, Name, Price FROM Products";
 
         using SqlCommand cmd = new SqlCommand(sql, dbConn.sqlConnection);
         using SqlDataReader reader = cmd.ExecuteReader();
@@ -55,16 +55,16 @@ class ProductADO
         return products;
     }
 
-    public static ProductADO GetById(DatabaseConnection dbConn, Guid id)
+    public static ProductADO? GetById(DatabaseConnection dbConn, Guid id)
     {
         dbConn.Open();
-        string sql = SELECT Id, Code, Name, Price FROM Products WHERE Id = @Id;
+        string sql = "SELECT Id, Code, Name, Price FROM Products WHERE Id = @Id";
 
         using SqlCommand cmd = new SqlCommand(sql, dbConn.sqlConnection);
-        cmd.Parameters.AddWithValue(@Id, id);
+        cmd.Parameters.AddWithValue("@Id", id);
 
         using SqlDataReader reader = cmd.ExecuteReader();
-        ProductADO product = null;
+        ProductADO? product = null;
 
         if (reader.Read())
         {

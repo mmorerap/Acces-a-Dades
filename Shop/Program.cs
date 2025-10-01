@@ -4,17 +4,17 @@ using dbdemo.Endpoints;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
- Configuració
+// Configuració
 builder.Configuration
     .SetBasePath(AppContext.BaseDirectory)
-    .AddJsonFile(appsettings.json, optional false, reloadOnChange true);
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-string connectionString = builder.Configuration.GetConnectionString(DefaultConnection)!;
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 DatabaseConnection dbConn = new DatabaseConnection(connectionString);
 
 WebApplication webApp = builder.Build();
 
- Registra els endpoints en un mètode separat
+// Registra els endpoints en un mètode separat
 webApp.MapProductEndpoints(dbConn);
 
 webApp.Run();
