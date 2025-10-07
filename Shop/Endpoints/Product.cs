@@ -4,7 +4,7 @@ using dbdemo.Model;
 
 namespace dbdemo.Endpoints;
 
-public static class Endpoints
+public static class EndpointsProduct
 {
     public static void MapProductEndpoints(this WebApplication app, DatabaseConnection dbConn)
     {
