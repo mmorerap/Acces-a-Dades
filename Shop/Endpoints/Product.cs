@@ -11,27 +11,20 @@ public static class Endpoints
         // GET /products
         app.MapGet("/products", () =>
         {
-            List<ProductADO>  products = ProductADO.GetAll(dbConn);
+            List<Product> products = ProductADO.GetAll(dbConn);
             return Results.Ok(products);
         });
 
         // GET Product by id
         app.MapGet("/products/{id}", (Guid id) =>
         {
-            ProductADO product = ProductADO.GetById(dbConn, id);
+            Product product = ProductADO.GetById(dbConn, id);
 
             return product is not null
                 ? Results.Ok(product)
                 : Results.NotFound(new { message = $"Product with Id {id} not found." });
 
-            // if (product is not null)
-            // {
-            //     return Results.Ok(product);
-            // }
-            // else
-            // {
-            //     return Results.NotFound(new { message = $"Product with Id {id} not found." });
-            // }
+
         });
 
 
@@ -40,7 +33,7 @@ public static class Endpoints
         // POST /products
         app.MapPost("/products", (ProductRequest req) =>
         {
-            ProductADO productADO = new ProductADO
+            Product product = new Product
             {
                 Id = Guid.NewGuid(),
                 Code = req.Code,
@@ -48,13 +41,13 @@ public static class Endpoints
                 Price = req.Price
             };
 
-            productADO.Insert(dbConn);
+            ProductADO.Insert(dbConn, product);
 
-            return Results.Created($"/products/{productADO.Id}", productADO);
+            return Results.Created($"/products/{product.Id}", product);
         });
     }
 
-   
+
 }
 
 public record ProductRequest(string Code, string Name, decimal Price);  // Com ha de llegir el POST
