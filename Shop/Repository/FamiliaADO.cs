@@ -20,8 +20,8 @@ class FamiliaADO
 
         using SqlCommand cmd = new SqlCommand(sql, dbConn.sqlConnection);
         cmd.Parameters.AddWithValue("@Id", familia.Id);
-        cmd.Parameters.AddWithValue("@Name", familia.Nom);
-        cmd.Parameters.AddWithValue("@Price", familia.Descripcio);
+        cmd.Parameters.AddWithValue("@Nom", familia.Nom);
+        cmd.Parameters.AddWithValue("@Descripcio", familia.Descripcio);
 
         int rows = cmd.ExecuteNonQuery();
         Console.WriteLine($"{rows} fila inserida.");

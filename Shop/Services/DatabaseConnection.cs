@@ -7,7 +7,7 @@ namespace dbdemo.Services;
 public class DatabaseConnection
 {
     private readonly string _connectionString;
-    public SqlConnection sqlConnection;
+    public SqlConnection? sqlConnection;
     public DatabaseConnection(string connectionString)
     {
         _connectionString = connectionString;
@@ -23,11 +23,12 @@ public class DatabaseConnection
         }
         catch (Exception ex)
         {
+            WriteLine(ex);
             return false;
         }
     }
     public void Close()
     {
-        sqlConnection.Close();
+        sqlConnection?.Close();
     }
 }

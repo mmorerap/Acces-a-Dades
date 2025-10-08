@@ -18,7 +18,7 @@ public static class EndpointsProduct
         // GET Product by id
         app.MapGet("/products/{id}", (Guid id) =>
         {
-            Product product = ProductADO.GetById(dbConn, id);
+            Product? product = ProductADO.GetById(dbConn, id);
 
             return product is not null
                 ? Results.Ok(product)
@@ -37,8 +37,11 @@ public static class EndpointsProduct
             {
                 Id = Guid.NewGuid(),
                 Code = req.Code,
+                Descripcio = req.Descripcio,
+                Price = req.Price,
+                Descompte = req.Descompte,
+                IdFamilia = req.IdFamilia,
                 Name = req.Name,
-                Price = req.Price
             };
 
             ProductADO.Insert(dbConn, product);
@@ -50,5 +53,5 @@ public static class EndpointsProduct
 
 }
 
-public record ProductRequest(string Code, string Name, decimal Price);  // Com ha de llegir el POST
+public record ProductRequest(string Code, string Descripcio, decimal Price ,decimal Descompte,Guid IdFamilia,string Name); 
 

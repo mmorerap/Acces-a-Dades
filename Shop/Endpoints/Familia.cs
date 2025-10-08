@@ -6,7 +6,7 @@ namespace dbdemo.Endpoints;
 
 public static class EndpointsFamilia
 {
-    public static void MapProductEndpoints(this WebApplication app, DatabaseConnection dbConn)
+    public static void MapFamiliaEndpoints(this WebApplication app, DatabaseConnection dbConn)
     {
         // GET /products
         app.MapGet("/familia", () =>
