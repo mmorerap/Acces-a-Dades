@@ -13,17 +13,17 @@ using dbdemo.Model;
 
 namespace dbdemo.DTO;
 
-public record FamiliaRequest( string Name, string Descripcio) 
+public record FamiliaRequest( string Nom, string Descripcio) 
 {
     // Guanyem CONTROL sobre com es fa la conversió
 
-    public Product ToFamilia(Guid id)   // Conversió a model
+    public Familia ToFamilia(Guid id)   // Conversió a model
     {
 
-        return new Product
+        return new Familia
         {
             Id = id,
-            Name = Name,
+            Nom = Nom,
             Descripcio = Descripcio
         };
     }
