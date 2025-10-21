@@ -12,8 +12,8 @@ public static class EndpointsFamilia
 {
     public static void MapFamiliaEndpoints(this WebApplication app, DatabaseConnection dbConn)
     {
-        // GET /products
-        app.MapGet("/familia", () =>
+        // GET /families
+        app.MapGet("/familias", () =>
         {
             List<Familia> familias = FamiliaADO.GetAll(dbConn);
             List<FamiliaResponse> familiaResponses = new List<FamiliaResponse>();
@@ -30,7 +30,7 @@ public static class EndpointsFamilia
             Familia familia = FamiliaADO.GetById(dbConn, id)!;
 
             return familia is not null
-                ? Results.Ok(familia)
+                ? Results.Ok(FamiliaResponse.FromFamilia(familia))
                 : Results.NotFound(new { message = $"Familia with Id {id} not found." });
 
 
