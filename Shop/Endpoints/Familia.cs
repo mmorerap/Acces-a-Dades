@@ -1,6 +1,10 @@
 using dbdemo.Repository;
 using dbdemo.Services;
 using dbdemo.Model;
+using dbdemo.DTO;
+// using dbdemo.Validators;
+// using dbdemo.Common;
+
 
 namespace dbdemo.Endpoints;
 
@@ -12,7 +16,12 @@ public static class EndpointsFamilia
         app.MapGet("/familia", () =>
         {
             List<Familia> familias = FamiliaADO.GetAll(dbConn);
-            return Results.Ok(familias);
+            List<FamiliaResponse> familiaResponses = new List<FamiliaResponse>();
+            foreach (Familia familia in familias)
+            {
+                familiaResponses.Add(FamiliaResponse.FromFamilia(familia));
+            }
+            return Results.Ok(familiaResponses);
         });
 
         // GET Familia by id
